@@ -82,4 +82,23 @@ app.MapGet("api/cities", () =>
     return cities;
 });
 
+// Walkers
+
+app.MapGet("api/walkers", () =>
+{
+    walkers.ForEach(w =>
+    {
+        w.Cities = new List<City>();
+        walkerCities.ForEach(wc =>
+        {
+            if (wc.WalkerId == w.Id)
+            {
+                City foundCity = cities.FirstOrDefault(c => c.Id == wc.CityId);
+                if (foundCity != null) w.Cities.Add(foundCity);
+            }
+        });
+    });
+    return walkers;
+});
+
 app.Run();

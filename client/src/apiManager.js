@@ -1,3 +1,5 @@
+// Dogs
+
 export const getDogs = async () => {
   const res = await fetch("/api/dogs");
   return res.json();
@@ -21,7 +23,16 @@ export const postDog = async (dog) => {
   return res.json();
 }
 
+
+// Cities
 export const getCities = async () => {
   const res = await fetch('/api/cities');
+  return res.json();
+}
+
+//Walkers
+
+export const getWalkers = async () => {
+  const res = await fetch('/api/walkers');
   return res.json();
 }

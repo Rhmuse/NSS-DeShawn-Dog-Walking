@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDogById } from '../apiManager';
+import { getDogById } from '../../apiManager';
 
 const DogDetails = () => {
 	const { id } = useParams();

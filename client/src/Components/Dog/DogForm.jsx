@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCities, postDog } from '../apiManager';
+import { getCities, postDog } from '../../apiManager';
 import { useNavigate } from 'react-router-dom';
 
 const DogForm = () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getDogs } from '../apiManager';
+import { getDogs } from '../../apiManager';
 import { Link, useNavigate } from 'react-router-dom';
 
 const DogList = () => {
