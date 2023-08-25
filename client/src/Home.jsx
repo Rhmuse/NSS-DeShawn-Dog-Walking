@@ -1,4 +1,4 @@
-import DogList from './Components/DogList';
+import DogList from './Components/Dog/DogList';
 
 export default function Home() {
 	return <DogList />;
