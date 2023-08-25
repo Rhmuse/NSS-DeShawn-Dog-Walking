@@ -17,12 +17,6 @@ CityId int [ref: > Cities.Id]
 WalkerId int [ref: > Walkers.Id]
 }
 
-table WalkerDogs {
-Id int pk
-WalkerId int [ref: > Walkers.Id]
-DogId int [ref: - Dogs.Id]
-}
-
 table WalkerCities {
 Id int pk
 CityId int [ref: <> Cities.Id]
