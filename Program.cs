@@ -72,7 +72,14 @@ app.MapPost("api/dogs", (Dog dog) =>
     dog.Id = id;
     dogs.Add(dog);
     id++;
+    return Results.Json(dog);
 });
 
+// Cities
+
+app.MapGet("api/cities", () =>
+{
+    return cities;
+});
 
 app.Run();
