@@ -22,14 +22,6 @@ List<Dog> dogs = new List<Dog>
     new Dog { Id = 4, Name = "Lucy", CityId = 3, WalkerId = 3 }
 };
 
-List<WalkerDog> walkerDogs = new List<WalkerDog>
-{
-    new WalkerDog { Id = 1, WalkerId = 1, DogId = 1 },
-    new WalkerDog { Id = 2, WalkerId = 2, DogId = 2 },
-    new WalkerDog { Id = 3, WalkerId = 1, DogId = 3 },
-    new WalkerDog { Id = 4, WalkerId = 3, DogId = 4 }
-};
-
 List<WalkerCity> walkerCities = new List<WalkerCity>
 {
     new WalkerCity { Id = 1, CityId = 1, WalkerId = 1 },
@@ -57,9 +49,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/hello", () =>
+// Dogs
+app.MapGet("api/dogs", () =>
 {
-    return new { Message = "Welcome to DeShawn's Dog Walking" };
+    return dogs;
 });
 
 
