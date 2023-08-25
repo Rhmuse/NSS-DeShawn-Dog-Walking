@@ -59,11 +59,19 @@ app.MapGet("api/dogs/{id}", (int id) =>
 {
     Dog foundDog = dogs.FirstOrDefault(d => d.Id == id);
     if (foundDog == null) return Results.NotFound();
-    Walker assignedWalker = walkers.FirstOrDefault(w => w.Id == foundDog.WalkerId);
-    foundDog.Walker = assignedWalker;
-    City city = cities.FirstOrDefault(c => c.Id == foundDog.CityId);
-    foundDog.City = city;
+    foundDog.Walker ??= walkers.FirstOrDefault(w => w.Id == foundDog.WalkerId);
+    foundDog.City ??= cities.FirstOrDefault(c => c.Id == foundDog.CityId);
     return Results.Ok(foundDog);
+});
+
+// iterator for ids
+int id = 5;
+
+app.MapPost("api/dogs", (Dog dog) =>
+{
+    dog.Id = id;
+    dogs.Add(dog);
+    id++;
 });
 
 
