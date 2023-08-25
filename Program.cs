@@ -55,5 +55,16 @@ app.MapGet("api/dogs", () =>
     return dogs;
 });
 
+app.MapGet("api/dogs/{id}", (int id) =>
+{
+    Dog foundDog = dogs.FirstOrDefault(d => d.Id == id);
+    if (foundDog == null) return Results.NotFound();
+    Walker assignedWalker = walkers.FirstOrDefault(w => w.Id == foundDog.WalkerId);
+    foundDog.Walker = assignedWalker;
+    City city = cities.FirstOrDefault(c => c.Id == foundDog.CityId);
+    foundDog.City = city;
+    return Results.Ok(foundDog);
+});
+
 
 app.Run();
