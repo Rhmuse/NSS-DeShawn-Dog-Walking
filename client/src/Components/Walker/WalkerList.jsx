@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getCities, getWalkers } from '../../apiManager';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, ListGroup, ListGroupItem } from 'reactstrap';
 
 const WalkerList = () => {
@@ -53,7 +53,7 @@ const WalkerList = () => {
 				{filteredWalkers.map((w) => {
 					return (
 						<ListGroupItem key={w.id}>
-							{w.name}{' '}
+							<Link to={`/walkers/${w.id}`}>{w.name}</Link>{' '}
 							<Button
 								onClick={() => navigate(`./assigndog/${w.id}`)}>
 								Add Dog

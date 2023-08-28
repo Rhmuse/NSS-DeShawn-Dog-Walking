@@ -63,3 +63,16 @@ export const getWalkers = async () => {
 	const res = await fetch('/api/walkers');
 	return res.json();
 }
+
+export const putWalker = async (walkerUpdateDTO, walkerId) => {
+	const options = {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(walkerUpdateDTO)
+	}
+
+	const res = await fetch(`/api/walkers/${walkerId}`, options);
+	return res.json();
+}

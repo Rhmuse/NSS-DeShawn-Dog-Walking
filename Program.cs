@@ -133,4 +133,54 @@ app.MapGet("api/walkers", () =>
     return walkers;
 });
 
+//WalkerCity iterator
+int walkerCityId = 5;
+
+app.MapPut("api/walkers/{walkerId}", (WalkerUpdateDTO walkerUpdate, int walkerId) =>
+{
+    List<WalkerCity> currentWalkerCities = new List<WalkerCity>();
+    List<WalkerCity> walkerCitiesToAdd = new List<WalkerCity>();
+
+    foreach (int cityId in walkerUpdate.CityIds)
+    {
+        foreach (WalkerCity walkerCity in walkerCities)
+        {
+            if (walkerCity.CityId == cityId && walkerCity.WalkerId == walkerId)
+            {
+
+            }
+            else
+            {
+                WalkerCity walkerCityToAdd = new WalkerCity()
+                {
+                    CityId = cityId,
+                    WalkerId = walkerId,
+                    Id = walkerCityId
+                };
+                walkerCitiesToAdd.Add(walkerCityToAdd);
+                walkerCityId++;
+            }
+        }
+    }
+
+    walkerCitiesToAdd.ForEach(wc => walkerCities.Add(wc));
+
+    List<WalkerCity> foundWalkerCities = walkerCities.Where(wc => wc.WalkerId == walkerId).ToList();
+
+
+    foreach (int cityId in walkerUpdate.CityIds)
+    {
+        WalkerCity foundWalkerCity = foundWalkerCities.FirstOrDefault(wc => wc.CityId == cityId);
+        if (foundWalkerCity != null) foundWalkerCities.Remove(foundWalkerCity);
+    }
+
+    foreach (WalkerCity walkerCity in foundWalkerCities)
+    {
+        walkerCities.Remove(walkerCity);
+    }
+    Walker foundWalker = walkers.FirstOrDefault(w => w.Id == walkerId);
+    foundWalker.Name = walkerUpdate.Name;
+    return Results.Ok(foundWalker);
+});
+
 app.Run();
