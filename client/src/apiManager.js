@@ -36,6 +36,13 @@ export const putDog = async (dog) => {
 	return res.json();
 }
 
+export const deleteDog = async (dogId) => {
+	const options = {
+		method: "Delete"
+	}
+	fetch(`/api/dogs/${dogId}`, options);
+}
+
 
 // Cities
 export const getCities = async () => {
