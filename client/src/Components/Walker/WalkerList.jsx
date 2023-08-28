@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getCities, getWalkers } from '../../apiManager';
+import { useNavigate } from 'react-router-dom';
 
 const WalkerList = () => {
+	const navigate = useNavigate();
+
 	const [walkers, setWalkers] = useState([]);
 	const [filteredWalkers, setFilteredWalkers] = useState([]);
 	const [cities, setCities] = useState([]);
@@ -47,7 +50,15 @@ const WalkerList = () => {
 			</div>
 			<ul>
 				{filteredWalkers.map((w) => {
-					return <li key={w.id}>{w.name}</li>;
+					return (
+						<li key={w.id}>
+							{w.name}{' '}
+							<button
+								onClick={() => navigate(`./assigndog/${w.id}`)}>
+								Add Dog
+							</button>
+						</li>
+					);
 				})}
 			</ul>
 		</>
