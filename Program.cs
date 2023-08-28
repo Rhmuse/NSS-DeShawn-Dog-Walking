@@ -19,7 +19,9 @@ List<Dog> dogs = new List<Dog>
     new Dog { Id = 1, Name = "Max", CityId = 1, WalkerId = 1 },
     new Dog { Id = 2, Name = "Bella", CityId = 2, WalkerId = 2 },
     new Dog { Id = 3, Name = "Charlie", CityId = 1, WalkerId = 1 },
-    new Dog { Id = 4, Name = "Lucy", CityId = 3, WalkerId = 3 }
+    new Dog { Id = 4, Name = "Lucy", CityId = 3, WalkerId = 3 },
+    new Dog { Id = 5, Name = "Rocky", CityId = 2, WalkerId = 0 },
+    new Dog { Id = 6, Name = "Luna", CityId = 3, WalkerId = 0 }
 };
 
 List<WalkerCity> walkerCities = new List<WalkerCity>
@@ -52,12 +54,17 @@ app.UseHttpsRedirection();
 // Dogs
 app.MapGet("api/dogs", () =>
 {
+    dogs.ForEach(d =>
+    {
+        d.City ??= cities.FirstOrDefault(c => c.Id == d.CityId);
+        d.Walker ??= walkers.FirstOrDefault(w => w.Id == d.WalkerId);
+    });
     return dogs;
 });
 
-app.MapGet("api/dogs/{id}", (int id) =>
+app.MapGet("api/dogs/{dogId}", (int dogId) =>
 {
-    Dog foundDog = dogs.FirstOrDefault(d => d.Id == id);
+    Dog foundDog = dogs.FirstOrDefault(d => d.Id == dogId);
     if (foundDog == null) return Results.NotFound();
     foundDog.Walker ??= walkers.FirstOrDefault(w => w.Id == foundDog.WalkerId);
     foundDog.City ??= cities.FirstOrDefault(c => c.Id == foundDog.CityId);
@@ -65,7 +72,7 @@ app.MapGet("api/dogs/{id}", (int id) =>
 });
 
 // iterator for ids
-int id = 5;
+int id = 7;
 
 app.MapPost("api/dogs", (Dog dog) =>
 {
@@ -73,6 +80,18 @@ app.MapPost("api/dogs", (Dog dog) =>
     dogs.Add(dog);
     id++;
     return Results.Json(dog);
+});
+
+app.MapPut("api/dogs/{dogId}", (Dog dog, int dogId) =>
+{
+    Dog foundDog = dogs.FirstOrDefault(d => d.Id == dogId);
+    if (foundDog == null) return Results.BadRequest();
+    foundDog.CityId = dog.CityId;
+    foundDog.Name = dog.Name;
+    foundDog.WalkerId = dog.WalkerId;
+    foundDog.City = dog.City;
+    foundDog.Walker = dog.Walker;
+    return Results.Ok(foundDog);
 });
 
 // Cities
@@ -98,6 +117,7 @@ app.MapGet("api/walkers", () =>
             }
         });
     });
+
     return walkers;
 });
 
