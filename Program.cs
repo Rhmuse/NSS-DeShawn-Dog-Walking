@@ -141,6 +141,22 @@ app.MapGet("api/walkers", () =>
     return walkers;
 });
 
+app.MapDelete("api/walkers/{walkerId}", (int walkerId) =>
+{
+    Walker foundWalker = walkers.FirstOrDefault(w => w.Id == walkerId);
+    if (foundWalker == null) return Results.BadRequest();
+    foreach (Dog dog in dogs)
+    {
+        if (dog.WalkerId == walkerId)
+        {
+            dog.WalkerId = 0;
+            dog.Walker = null;
+        }
+    }
+    walkers.Remove(foundWalker);
+    return Results.Ok();
+});
+
 //WalkerCity iterator
 int walkerCityId = 5;
 

@@ -83,3 +83,11 @@ export const putWalker = async (walkerUpdateDTO, walkerId) => {
 	const res = await fetch(`/api/walkers/${walkerId}`, options);
 	return res.json();
 }
+
+export const deleteWalker = async (walkerId) => {
+	const options = {
+		method: "DELETE",
+	}
+
+	fetch(`/api/walkers/${walkerId}`, options);
+}
