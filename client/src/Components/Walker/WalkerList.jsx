@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCities, getWalkers } from '../../apiManager';
+import { deleteWalker, getCities, getWalkers } from '../../apiManager';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, ListGroup, ListGroupItem } from 'reactstrap';
 
@@ -57,6 +57,17 @@ const WalkerList = () => {
 							<Button
 								onClick={() => navigate(`./assigndog/${w.id}`)}>
 								Add Dog
+							</Button>
+							<Button
+								onClick={() => {
+									deleteWalker(w.id);
+									getWalkers().then((walkers) => {
+										setWalkers(walkers);
+										setFilteredWalkers(walkers);
+										setCityFilterId(0);
+									});
+								}}>
+								Remove
 							</Button>
 						</ListGroupItem>
 					);
