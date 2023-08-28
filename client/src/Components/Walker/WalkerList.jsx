@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getCities, getWalkers } from '../../apiManager';
 import { useNavigate } from 'react-router-dom';
+import { Button, Container, ListGroup, ListGroupItem } from 'reactstrap';
 
 const WalkerList = () => {
 	const navigate = useNavigate();
@@ -35,7 +36,7 @@ const WalkerList = () => {
 	}, [cityFilterId]);
 	return (
 		<>
-			<div>
+			<Container>
 				<select
 					onChange={(e) => setCityFilterId(parseInt(e.target.value))}>
 					<option value={0}>Select a city to filter...</option>
@@ -47,20 +48,20 @@ const WalkerList = () => {
 						);
 					})}
 				</select>
-			</div>
-			<ul>
+			</Container>
+			<ListGroup>
 				{filteredWalkers.map((w) => {
 					return (
-						<li key={w.id}>
+						<ListGroupItem key={w.id}>
 							{w.name}{' '}
-							<button
+							<Button
 								onClick={() => navigate(`./assigndog/${w.id}`)}>
 								Add Dog
-							</button>
-						</li>
+							</Button>
+						</ListGroupItem>
 					);
 				})}
-			</ul>
+			</ListGroup>
 		</>
 	);
 };

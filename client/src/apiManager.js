@@ -43,6 +43,20 @@ export const getCities = async () => {
 	return res.json();
 }
 
+
+export const postCity = async (city) => {
+	const options = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(city)
+	}
+
+	const res = await fetch('/api/cities', options);
+	return res.json();
+}
+
 //Walkers
 
 export const getWalkers = async () => {
