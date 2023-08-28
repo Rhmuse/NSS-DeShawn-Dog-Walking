@@ -94,6 +94,14 @@ app.MapPut("api/dogs/{dogId}", (Dog dog, int dogId) =>
     return Results.Ok(foundDog);
 });
 
+app.MapDelete("api/dogs/{dogid}", (int dogId) =>
+{
+    Dog foundDog = dogs.FirstOrDefault(d => d.Id == dogId);
+    if (foundDog == null) return Results.BadRequest();
+    dogs.Remove(foundDog);
+    return Results.Ok();
+});
+
 // Cities
 
 

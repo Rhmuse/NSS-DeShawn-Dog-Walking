@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getDogs } from '../../apiManager';
+import { deleteDog, getDogs } from '../../apiManager';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, ListGroup, ListGroupItem } from 'reactstrap';
 
@@ -26,7 +26,16 @@ const DogList = () => {
 				{dogs?.map((d) => {
 					return (
 						<ListGroupItem key={d.id}>
-							<Link to={`dogs/${d.id}`}>{d.name}</Link>
+							<Link to={`dogs/${d.id}`}>{d.name}</Link>{' '}
+							<Button
+								onClick={() => {
+									deleteDog(d.id);
+									getDogs().then((dogs) => {
+										setDogs(dogs);
+									});
+								}}>
+								Remove
+							</Button>
 						</ListGroupItem>
 					);
 				})}
