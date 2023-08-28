@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getDogs } from '../../apiManager';
 import { Link, useNavigate } from 'react-router-dom';
+import { Button, Container, ListGroup, ListGroupItem } from 'reactstrap';
 
 const DogList = () => {
 	const [dogs, setDogs] = useState([]);
@@ -13,23 +14,23 @@ const DogList = () => {
 	}, []);
 	return (
 		<>
-			<div>
-				<button
+			<Container>
+				<Button
 					onClick={() => {
 						navigate('/dogs/new');
 					}}>
 					Add Dog
-				</button>
-			</div>
-			<ul>
+				</Button>
+			</Container>
+			<ListGroup>
 				{dogs?.map((d) => {
 					return (
-						<li key={d.id}>
+						<ListGroupItem key={d.id}>
 							<Link to={`dogs/${d.id}`}>{d.name}</Link>
-						</li>
+						</ListGroupItem>
 					);
 				})}
-			</ul>
+			</ListGroup>
 		</>
 	);
 };

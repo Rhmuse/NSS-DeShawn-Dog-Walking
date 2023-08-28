@@ -71,14 +71,14 @@ app.MapGet("api/dogs/{dogId}", (int dogId) =>
     return Results.Ok(foundDog);
 });
 
-// iterator for ids
-int id = 7;
+// iterator for dogIds
+int dogId = 7;
 
 app.MapPost("api/dogs", (Dog dog) =>
 {
-    dog.Id = id;
+    dog.Id = dogId;
     dogs.Add(dog);
-    id++;
+    dogId++;
     return Results.Json(dog);
 });
 
@@ -96,11 +96,23 @@ app.MapPut("api/dogs/{dogId}", (Dog dog, int dogId) =>
 
 // Cities
 
+
 app.MapGet("api/cities", () =>
 {
     return cities;
 });
 
+//iterator for cityId
+int cityId = 4;
+
+app.MapPost("api/cities", (City city) =>
+{
+    if (city == null) return Results.BadRequest();
+    city.Id = cityId;
+    cities.Add(city);
+    cityId++;
+    return Results.Ok(city);
+});
 // Walkers
 
 app.MapGet("api/walkers", () =>
